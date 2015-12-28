@@ -28,6 +28,7 @@ var mqtt = new mosca.Server({
 
 mqtt.on('published', function(packet, client) {
   packet.payload = packet.payload.toString();
+  packet.timestamp = new Date();
   db.insert(packet);
 });
 
