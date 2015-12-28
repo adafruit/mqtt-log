@@ -27,6 +27,7 @@ var mqtt = new mosca.Server({
 });
 
 mqtt.on('published', function(packet, client) {
+  packet.payload = packet.payload.toString();
   db.insert(packet);
 });
 
