@@ -1,0 +1,15 @@
+{
+  "name": "mqtt-log",
+  "version": "1.0.0",
+  "description": "a mqtt logging util",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Todd Treece <todd@uniontownlabs.org>",
+  "license": "MIT",
+  "dependencies": {
+    "mosca": "^0.32.1",
+    "nedb": "^1.5.1"
+  }
+}
