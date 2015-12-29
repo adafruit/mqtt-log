@@ -1,16 +1,16 @@
 var http = require('http'),
     nedb = require('nedb'),
-    mosca = require('mosca'),
+    aedes = require('aedes')(),
     url  = require('url'),
     db = new nedb('mqtt.db'),
     mqtt_port = process.env.MQTT_PORT || 1883,
     http_port = process.env.HTTP_PORT || 8080;
 
-var mqtt = new mosca.Server({
-  port: mqtt_port
-});
+var mqtt = require('net').createServer(aedes.handle);
 
-mqtt.on('clientConnected', function(client) {
+mqtt.listen(mqtt_port);
+
+aedes.on('client', function(client) {
   db.insert({
     topic: '/',
     action: 'connect',
@@ -19,7 +19,7 @@ mqtt.on('clientConnected', function(client) {
   });
 });
 
-mqtt.on('clientDisconnected', function(client) {
+aedes.on('clientDisconnect', function(client) {
   db.insert({
     topic: '/',
     action: 'disconnect',
@@ -28,7 +28,7 @@ mqtt.on('clientDisconnected', function(client) {
   });
 });
 
-mqtt.on('subscribed', function(topic, client) {
+aedes.on('subscribe', function(topic, client) {
   db.insert({
     topic: '/',
     action: 'subscribe',
@@ -37,7 +37,7 @@ mqtt.on('subscribed', function(topic, client) {
   });
 });
 
-mqtt.on('unsubscribed', function(topic, client) {
+aedes.on('unsubscribe', function(topic, client) {
   db.insert({
     topic: '/',
     action: 'unsubscribe',
@@ -46,7 +46,7 @@ mqtt.on('unsubscribed', function(topic, client) {
   });
 });
 
-mqtt.on('published', function(packet, client) {
+aedes.on('publish', function(packet, client) {
 
   if(! client) return;
   

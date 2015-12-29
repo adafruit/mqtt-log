@@ -17,7 +17,7 @@
   "author": "Todd Treece <todd@uniontownlabs.org>",
   "license": "MIT",
   "dependencies": {
-    "mosca": "^0.32.1",
+    "aedes": "^0.11.1",
     "nedb": "^1.5.1"
   }
 }
