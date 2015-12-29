@@ -49,9 +49,10 @@ mqtt.on('unsubscribed', function(topic, client) {
 mqtt.on('published', function(packet, client) {
 
   if(! client) return;
-
-  packet.payload = JSON.stringify(packet.payload);
+  
   packet.payloadString = packet.payload.toString();
+  packet.payloadLength = packet.payload.length;
+  packet.payload = JSON.stringify(packet.payload);
   packet.timestamp = new Date();
   db.insert(packet);
 
