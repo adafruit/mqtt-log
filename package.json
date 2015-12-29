@@ -6,6 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adafruit/mqtt-log.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adafruit/mqtt-log/issues"
+  },
+  "homepage": "https://github.com/adafruit/mqtt-log#readme",
   "author": "Todd Treece <todd@uniontownlabs.org>",
   "license": "MIT",
   "dependencies": {
