@@ -2,10 +2,12 @@ var http = require('http'),
     nedb = require('nedb'),
     mosca = require('mosca'),
     url  = require('url'),
-    db = new nedb('mqtt.db');
+    db = new nedb('mqtt.db'),
+    mqtt_port = process.env.MQTT_PORT || 1883,
+    http_port = process.env.HTTP_PORT || 8080;
 
 var mqtt = new mosca.Server({
-  port: process.env.MQTT_PORT || 1883
+  port: mqtt_port
 });
 
 mqtt.on('clientConnected', function(client) {
@@ -62,11 +64,6 @@ mqtt.on('published', function(packet, client) {
 
 });
 
-db.loadDatabase(function(err) {
-  web.listen(process.env.HTTP_PORT || 8080);
-  console.log('listening...');
-});
-
 var web = http.createServer(function(req, res) {
 
   var topic = url.parse(req.url).pathname;
@@ -76,6 +73,11 @@ var web = http.createServer(function(req, res) {
   else
     loadTopic(topic, req, res);
 
+});
+
+db.loadDatabase(function(err) {
+  web.listen(http_port);
+  console.log('listening on mqtt port %d and http port %d...', mqtt_port, http_port);
 });
 
 function loadIndex(req, res) {

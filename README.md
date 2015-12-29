@@ -17,7 +17,7 @@ $ git clone https://github.com/adafruit/mqtt-log.git && cd mqtt-log
 
 install dependencies:
 ```sh
-$ npm install --no-optional
+$ npm install
 ```
 
 start the server:
